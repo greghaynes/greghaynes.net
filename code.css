@@ -1,0 +1,9 @@
+#code_list {
+  padding: 10px;
+  list-style-type: none;
+}
+
+.code_list_item {
+  padding-bottom: 10px;
+}
+

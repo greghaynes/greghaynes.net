@@ -2,29 +2,120 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>GregHaynes.net</title>
+
+		<style>
+			body {
+				margin: 0;
+				font-family:sans-serif;
+				font-size: .9em
+			}
+			#sidebar {
+				position: absolute;
+				top: 30px;
+				width: 180px;
+				text-align: right;
+			}
+			#content {
+				position: absolute;
+				top: 70px;
+				left: 250px;
+			}
+			h1 {
+				font-size: 1.028em;
+				letter-spacing: 1.1px;
+				font-weight: normal;
+			}
+			a {
+				text-decoration: none;
+				color: #777;
+				padding-right: 7px;
+				border-right: 3px solid #FFF;
+			}
+			a:hover {
+				border-right: 3px solid #79C;
+			}
+			.nav_selected {
+				border-right: 3px solid #B55;
+			}
+			.nav_item {
+				list-style-type: none;
+				padding-top: 7px;
+				margin: 0;
+			}
+			.page_hidden {
+				visibility: hidden;
+			}
+		</style>
+		<script type="text/javascript">
+			var contentNodes = {};
+
+			document.getElementsByClassName = function(clsName){
+				var retVal = new Array();
+				var elements = document.getElementsByTagName("*");
+				for(var i = 0;i < elements.length;i++){
+					if(elements[i].className.indexOf(" ") >= 0){
+						var classes = elements[i].className.split(" ");
+						for(var j = 0;j < classes.length;j++){
+							if(classes[j] == clsName)
+							retVal.push(elements[i]);
+						}
+					}
+					else if(elements[i].className == clsName)
+						retVal.push(elements[i]);
+				}
+				return retVal;
+			}
+
+			function load_page(page_name) {
+				var content_elem = document.getElementById("content");
+				while(content_elem.hasChildNodes())
+					content_elem.removeChild(content_elem.firstChild);
+				content_elem.appendChild(contentNodes['page_'+page_name]);
+
+				var nav_list = document.getElementsByClassName("nav_link");
+				for(i in nav_list) {
+					if(nav_list[i].href.indexOf("#"+page_name) >= 0)
+						nav_list[i].className = "nav_link nav_selected";
+					else {
+						nav_list[i].className = "nav_link";
+					}
+				}
+			}
+
+			function do_onload() {
+				var content_elem = document.getElementById("content");
+				for(i in content_elem.childNodes)
+					contentNodes[content_elem.childNodes[i].id] = content_elem.childNodes[i];
+
+				var url = decodeURI(window.location);
+				var page_name = "about";
+				var lb_ndx = url.indexOf("#");
+				if(lb_ndx >= 0)
+					page_name = url.substring(lb_ndx + 1);
+				load_page(page_name);
+			}
+		</script>
 	</head>
 
-	<body>
-		<div id="sidebar">
-			<header>GregHaynes.net</header>
-			<nav id="ghnet_nav">
-				<ul>
-					<li><a href="#about">About</a></li>
-					<li><a href="#code">Code</a></li>
-					<li><a href="#blog" onclick='window.location="http://blog.greghaynes.net";'>Blog</a></li>
+	<body onload="do_onload()">
+		<header id="sidebar">
+			<h1>GregHaynes.net</h1>
+			<nav id="main_nav">
+				<ul id="nav_list">
+					<li class="nav_item" onclick="load_page('about')"><a href="#about" class="nav_link">About</a></li>
+					<li class="nav_item" onclick="load_page('code')"><a href="#code" class="nav_link">Code</a></li>
+					<li class="nav_item"><a href="http://blog.greghaynes.net" class="nav_link">Blog</a></li>
 				</ul>
 			</nav>
-		</div>
+		</header>
 
-		<div id="content">
-			<article id="ghnet_content">
-				<section id="ghnet_page_about">
-					This is the about section for Gregory Haynes.
-				</section>
-				<section id="ghnet_page_code">
-					This is the code page for Gregory Haynes.
-				</section>
-			</article>
-		</div>
+		<article id="content">
+			<section id="page_about">
+				<p>Gregory Haynes is a software engineer in Portland, Oregon.</p>
+				<p>He is involved in several open source projects while pursuing a Bachelor of Computer Science at Portland State University.</p>
+			</section>
+			<section id="page_code">
+			</section>
+		</article>
 	</body>
 </html>

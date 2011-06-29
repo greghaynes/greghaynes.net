@@ -1,31 +1,134 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <title>Greghaynes.net</title>
-  <link rel="stylesheet" href="main.css" />
-  <meta name="description" content="Homepage of Gregory Haynes" />
-  <meta name="keywords" content="Haynes, Gregory, Greg, Programmer, Portland, PSU, PDX" />
-</head>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="description" content="Homepage of Gregory Haynes" />
+		<meta name="keywords" content="Haynes, Gregory, Greg, Programmer, Open Source, Portland, PSU, PDX" />
+		<title>GregHaynes.net</title>
 
-<body>
-  <div id="header">
-    <span id="title">Greghaynes.net</span>
-  </div>
+		<style>
+			body {
+				margin: 0;
+				font-family:sans-serif;
+				font-size: .9em
+			}
+			#sidebar {
+				position: absolute;
+				top: 30px;
+				width: 180px;
+				text-align: right;
+			}
+			#content {
+				position: absolute;
+				top: 70px;
+				left: 250px;
+			}
+			h1 {
+				font-size: 1.028em;
+				letter-spacing: 1.1px;
+				font-weight: normal;
+			}
+			a {
+				color: #667;
+				text-decoration: none;
+			}
+			a.nav_link {
+				padding-right: 7px;
+				border-right: 3px solid #FFF;
+			}
+			a.nav_link:hover {
+				border-right: 3px solid #79C;
+			}
+			a.nav_selected {
+				border-right: 3px solid #B55;
+			}
+			.nav_item {
+				list-style-type: none;
+				padding-top: 7px;
+				margin: 0;
+			}
+			.code_list_item {
+				list-style-type: none;
+				padding-bottom: 10px;
+			}
+		</style>
+		<script type="text/javascript">
+			var contentNodes = {};
 
-  <div id="navigation">
-    <ul id="section_list">
-      <li><a href="code.html">Code</a></li>
-      <li><a href="http://blog.greghaynes.net">Blog</a></li>
-      <li><a href="http://www.flickr.com/photos/gregarei">Flickr</a></li>
-    </ul>
-  </div>
+			document.getElementsByClassName = function(clsName){
+				var retVal = new Array();
+				var elements = document.getElementsByTagName("*");
+				for(var i = 0;i < elements.length;i++){
+					if(elements[i].className.indexOf(" ") >= 0){
+						var classes = elements[i].className.split(" ");
+						for(var j = 0;j < classes.length;j++){
+							if(classes[j] == clsName)
+							retVal.push(elements[i]);
+						}
+					}
+					else if(elements[i].className == clsName)
+						retVal.push(elements[i]);
+				}
+				return retVal;
+			}
 
-  <div id="content">
-    <div class="content_entry">
-      <p>Gregory Haynes is a student at <a href="http://pdx.edu">Portland State University</a> where he is currently studying computer science.</p>
-    </div>
-  </div>
+			function load_page(page_name) {
+				var content_elem = document.getElementById("content");
+				while(content_elem.hasChildNodes())
+					content_elem.removeChild(content_elem.firstChild);
+				content_elem.appendChild(contentNodes['page_'+page_name]);
 
-</body>
+				var nav_list = document.getElementsByClassName("nav_link");
+				for(i in nav_list) {
+					if(nav_list[i].href.indexOf("#"+page_name) >= 0)
+						nav_list[i].className = "nav_link nav_selected";
+					else {
+						nav_list[i].className = "nav_link";
+					}
+				}
+			}
+
+			function do_onload() {
+				var content_elem = document.getElementById("content");
+				for(i in content_elem.childNodes)
+					contentNodes[content_elem.childNodes[i].id] = content_elem.childNodes[i];
+
+				var url = decodeURI(window.location);
+				var page_name = "about";
+				var lb_ndx = url.indexOf("#");
+				if(lb_ndx >= 0)
+					page_name = url.substring(lb_ndx + 1);
+				load_page(page_name);
+			}
+		</script>
+	</head>
+
+	<body onload="do_onload()">
+		<header id="sidebar">
+			<h1>GregHaynes.net</h1>
+			<nav id="main_nav">
+				<ul id="nav_list">
+					<li class="nav_item" onclick="load_page('about')"><a href="#about" class="nav_link">About</a></li>
+					<li class="nav_item" onclick="load_page('code')"><a href="#code" class="nav_link">Code</a></li>
+					<li class="nav_item"><a href="http://blog.greghaynes.net" class="nav_link">Blog</a></li>
+					<li class="nav_item"><a href="http://www.flickr.com/photos/gregarei" class="nav_link">Photos</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<article id="content">
+			<section id="page_about">
+				<p>Gregory Haynes is a software engineer in Portland, Oregon.</p>
+				<p>He is involved in several open source projects while pursuing a Bachelor of Computer Science at Portland State University.</p>
+			</section>
+			<section id="page_code">
+				<ul>
+					<li class="code_list_item"><a href="http://github.com/greghaynes">Github</a></li>
+					<li class="code_list_item"><a href="http://gitorious.org/~greghaynes">Gitorious</a></li>
+					<li class="code_list_item"><a href="http://xsbs.greghaynes.net">XSBS</a> - eXtensible SauerBraten Server</li>
+					<li class="code_list_item"><a href="http://kobby.greghaynes.net">Kobby</a> - Collaborative text editor for KDE</li>
+					<li class="code_list_item"><a href="http://rov.cs.pdx.edu">Portland State ROV Team</a></li>
+				</ul>
+			</section>
+		</article>
+	</body>
 </html>

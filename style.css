@@ -41,11 +41,11 @@ a.nav_link {
     border-right: 3px solid #EEE;
 }
 a.nav_link:hover {
-    border-right: 3px solid #79C;
+    border-right: 3px solid #B55;
     text-decoration: none;
 }
 a.nav_selected, a.nav_selected:hover {
-    border-right: 3px solid #B55;
+    border-right: 3px solid #79c;
 }
 a#sidebar {
     color: #667;

@@ -1,156 +1,112 @@
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="description" content="Homepage of Gregory Haynes, Software Engineer.">
-		<meta name="keywords" content="Haynes, Gregory, Greg, Programmer, Open Source, Portland, PSU, PDX">
-                <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="description" content="Homepage of Gregory Haynes, Software Engineer.">
+        <meta name="keywords" content="Haynes, Gregory, Greg, Programmer, Open Source, Portland, PSU, PDX">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link rel='stylesheet' type='text/css' href='style.css'/>
 
-		<title>GregHaynes.net</title>
+        <title>GregHaynes.net</title>
 
-		<style>
-			body {
-				margin: 0;
-				font-family:'Open Sans', sans-serif;
-				font-size: .9em
-			}
-			#sidebar {
-				position: absolute;
-				top: 30px;
-				width: 150px;
-				text-align: right;
-			}
-			#content {
-				position: absolute;
-				top: 70px;
-				left: 210px;
-				margin-right: 75px;
-			}
-			h1 {
-				font-size: 1.0em;
-				font-weight: bold;
-				color: #111;
-			}
-			a {
-				color: #667;
-				text-decoration: none;
-			}
-			a.nav_link {
-				padding-right: 7px;
-				border-right: 3px solid #EEE;
-			}
-			a.nav_link:hover {
-				border-right: 3px solid #79C;
-			}
-			a.nav_selected, a.nav_selected:hover {
-				border-right: 3px solid #B55;
-			}
-			.nav_item {
-				list-style-type: none;
-				padding-top: 7px;
-				margin: 0;
-			}
-			.code_list_item {
-				list-style-type: none;
-				padding-bottom: 10px;
-			}
-		</style>
-		<script type="text/javascript">
-			var contentNodes = {};
+        <style>
+        </style>
+        <script type="text/javascript">
+            var contentNodes = {};
 
-			document.getElementsByClassName = function(clsName){
-				var retVal = new Array();
-				var elements = document.getElementsByTagName("*");
-				for(var i = 0;i < elements.length;i++){
-					if(elements[i].className.indexOf(" ") >= 0){
-						var classes = elements[i].className.split(" ");
-						for(var j = 0;j < classes.length;j++){
-							if(classes[j] == clsName)
-							retVal.push(elements[i]);
-						}
-					}
-					else if(elements[i].className == clsName)
-						retVal.push(elements[i]);
-				}
-				return retVal;
-			}
+            document.getElementsByClassName = function(clsName){
+                var retVal = new Array();
+                var elements = document.getElementsByTagName("*");
+                for(var i = 0;i < elements.length;i++){
+                    if(elements[i].className.indexOf(" ") >= 0){
+                        var classes = elements[i].className.split(" ");
+                        for(var j = 0;j < classes.length;j++){
+                            if(classes[j] == clsName)
+                            retVal.push(elements[i]);
+                        }
+                    }
+                    else if(elements[i].className == clsName)
+                        retVal.push(elements[i]);
+                }
+                return retVal;
+            }
 
-			function load_page(page_name) {
-				var content_elem = document.getElementById("content");
-				while(content_elem.hasChildNodes())
-					content_elem.removeChild(content_elem.firstChild);
-				content_elem.appendChild(contentNodes['page_'+page_name]);
+            function load_page(page_name) {
+                var content_elem = document.getElementById("content");
+                while(content_elem.hasChildNodes())
+                    content_elem.removeChild(content_elem.firstChild);
+                content_elem.appendChild(contentNodes['page_'+page_name]);
 
-				var nav_list = document.getElementsByClassName("nav_link");
-				for(i in nav_list) {
-					if(nav_list[i].href.indexOf("#"+page_name) >= 0)
-						nav_list[i].className = "nav_link nav_selected";
-					else {
-						nav_list[i].className = "nav_link";
-					}
-				}
-			}
+                var nav_list = document.getElementsByClassName("nav_link");
+                for(i in nav_list) {
+                    if(nav_list[i].href.indexOf("#"+page_name) >= 0)
+                        nav_list[i].className = "nav_link nav_selected";
+                    else {
+                        nav_list[i].className = "nav_link";
+                    }
+                }
+            }
 
-			function do_onload() {
-				var content_elem = document.getElementById("content");
-				for(i in content_elem.childNodes)
-					contentNodes[content_elem.childNodes[i].id] = content_elem.childNodes[i];
+            function do_onload() {
+                var content_elem = document.getElementById("content");
+                for(i in content_elem.childNodes)
+                    contentNodes[content_elem.childNodes[i].id] = content_elem.childNodes[i];
 
-				var url = decodeURI(window.location);
-				var page_name = "about";
-				var lb_ndx = url.indexOf("#");
-				if(lb_ndx >= 0)
-					page_name = url.substring(lb_ndx + 1);
-				load_page(page_name);
-			}
-		</script>
+                var url = decodeURI(window.location);
+                var page_name = "about";
+                var lb_ndx = url.indexOf("#");
+                if(lb_ndx >= 0)
+                    page_name = url.substring(lb_ndx + 1);
+                load_page(page_name);
+            }
+        </script>
 
-		<script type="text/javascript">
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-24431017-1']);
-			_gaq.push(['_trackPageview']);
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-24431017-1']);
+            _gaq.push(['_trackPageview']);
 
-			(function() {
-				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			})();
-		</script>
-	</head>
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+    </head>
 
-	<body onload="do_onload()">
-		<header id="sidebar">
-			<h1>GregHaynes.net</h1>
-			<nav id="main_nav">
-				<ul id="nav_list">
-					<li class="nav_item" onclick="load_page('about')"><a href="#about" class="nav_link">About</a></li>
-					<li class="nav_item" onclick="load_page('projects')"><a href="#projects" class="nav_link">Projects</a></li>
-					<li class="nav_item" onclick="load_page('misc')"><a href="#misc" class="nav_link">Misc.</a></li>
-				</ul>
-			</nav>
-		</header>
+    <body onload="do_onload()">
+        <header id="sidebar">
+            <h1>GregHaynes.net</h1>
+            <nav id="main_nav">
+                <ul id="nav_list">
+                    <li class="nav_item" onclick="load_page('about')"><a href="#about" class="nav_link">About</a></li>
+                    <li class="nav_item" onclick="load_page('projects')"><a href="#projects" class="nav_link">Projects</a></li>
+                    <li class="nav_item" onclick="load_page('misc')"><a href="#misc" class="nav_link">Misc.</a></li>
+                </ul>
+            </nav>
+        </header>
 
-		<article id="content">
-			<section id="page_about">
-				<p>Gregory Haynes is a software engineer in Portland, Oregon.</p>
-				<p>He is involved in many open source <a href="#projects" onclick="load_page('projects')">projects</a> and is currently an operations engineer at <a href="http://www.idealist.org">Action Without Borders</a>.</p>
-			</section>
-			<section id="page_projects">
-				<ul>
-					<li class="code_list_item"><a href="http://github.com/greghaynes">Github</a> - Project Hosting</li>
-					<li class="code_list_item"><a href="http://avt.cecs.pdx.edu">PSU-AVT</a> - Portland State Autonomous Vehicles Team</li>
-					<li class="code_list_item"><a href="https://github.com/greghaynes/Anomanon">Anomanon</a> - Network Anomalie Monitor</li>
-					<li class="code_list_item"><a href="http://xsbs.greghaynes.net">XSBS</a> - eXtensible SauerBraten Server</li>
-					<li class="code_list_item"><a href="http://kobby.greghaynes.net">Kobby</a> - Collaborative text editor for KDE</li>
-					<li class="code_list_item"><a href="http://github.com/greghaynes/Afproto/wiki">Afproto</a> - Simple embedded framing protocol with bingings for other languages</li>
-				</ul>
-			</section>
-			<section id="page_misc">
-				<ul>
-					<li><a href="http://www.flickr.com/photos/gregarei">Photos</a></li>
-					<li><a href="http://www.youtube.com/user/greghaynesify">YouTube</a></li>
-					<li><a href="pgp.asc.txt">PGP</a></li>
-				</ul>
-			</section>
-		</article>
-	</body>
+        <article id="content">
+            <section id="page_about">
+                <p>Gregory Haynes is a software engineer in Portland, Oregon.</p>
+                <p>He is involved in many open source <a href="#projects" onclick="load_page('projects')">projects</a> and is currently an operations engineer at <a href="http://www.idealist.org">Action Without Borders</a>.</p>
+            </section>
+            <section id="page_projects">
+                <ul>
+                    <li class="code_list_item"><a href="http://github.com/greghaynes">Github</a> - Project Hosting</li>
+                    <li class="code_list_item"><a href="http://avt.cecs.pdx.edu">PSU-AVT</a> - Portland State Autonomous Vehicles Team</li>
+                    <li class="code_list_item"><a href="https://github.com/greghaynes/Anomanon">Anomanon</a> - Network Anomalie Monitor</li>
+                    <li class="code_list_item"><a href="http://xsbs.greghaynes.net">XSBS</a> - eXtensible SauerBraten Server</li>
+                    <li class="code_list_item"><a href="http://kobby.greghaynes.net">Kobby</a> - Collaborative text editor for KDE</li>
+                    <li class="code_list_item"><a href="http://github.com/greghaynes/Afproto/wiki">Afproto</a> - Simple embedded framing protocol with bingings for other languages</li>
+                </ul>
+            </section>
+            <section id="page_misc">
+                <ul>
+                    <li><a href="http://www.flickr.com/photos/gregarei">Photos</a></li>
+                    <li><a href="http://www.youtube.com/user/greghaynesify">YouTube</a></li>
+                    <li><a href="pgp.asc.txt">PGP</a></li>
+                </ul>
+            </section>
+        </article>
+    </body>
 </html>

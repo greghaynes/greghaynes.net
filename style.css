@@ -60,3 +60,18 @@ a#sidebar {
     padding-bottom: 10px;
 }
 
+.lifestream_event {
+    padding-bottom: 1em;
+}
+
+.lifestream_sub {
+    padding: 0;
+    margin: 0;
+    padding-left: 10px;
+}
+
+.github_event {
+    padding-left: 20px;
+    background-image: url("http://github.com/favicon.ico");
+    background-repeat: no-repeat;
+}

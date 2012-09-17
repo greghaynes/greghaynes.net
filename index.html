@@ -8,8 +8,7 @@
 
         <title>GregHaynes.net</title>
 
-        <style>
-        </style>
+        <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript">
             var contentNodes = {};
 
@@ -52,11 +51,56 @@
                     contentNodes[content_elem.childNodes[i].id] = content_elem.childNodes[i];
 
                 var url = decodeURI(window.location);
-                var page_name = "about";
+                var page_name = "lifestream";
                 var lb_ndx = url.indexOf("#");
                 if(lb_ndx >= 0)
                     page_name = url.substring(lb_ndx + 1);
                 load_page(page_name);
+
+                $.getJSON('http://lifestream.greghaynes.net/v1/recent', function(data) {
+                    $(data).each(function(index, event) {
+                        msg_generators = {
+                            'github': {
+                                'PushEvent': function(event) {
+                                    repo = event['properties']['repo']['name'];
+                                    ret = "<div class=\"github_event\">Pushed to <a href=\"http://github.com/" + repo + "\">" +
+                                        repo + "</a><ul class=\"lifestream_sub\">";
+                                    commits = event.properties.payload.commits;
+                                    $(commits).each(function(index, commit) {
+                                        ret += "<em>\"" + commit.message + "\"</em><br />";
+                                    });
+                                    ret += "</ul></div>";
+                                    return ret;
+                                },
+                                'PullRequestEvent': function(event) {
+                                    repo = event['properties']['repo']['name'];
+                                    ret = "<div class=\"github_event\">Received <a href=\"" + event.properties.payload.pull_request.html_url + "\">pull request</a>" +
+                                        " on <a href=\"http://github.com/" + repo + "\">" + repo + "</a></div>";
+                                    return ret;
+                                },
+                                'IssueCommentEvent': function(event) {
+                                    return "<div class=\"github_event\">Commented on issue <a href=\"" + event.properties.payload.issue.html_url + "\">\"" +
+                                        event.properties.payload.issue.title + "\"</a></div>";
+                                },
+                                'CreateEvent': function(event) {
+                                    repo_name = event.properties.repo.name;
+                                    return "<div class=\"github_event\">Created repository <a href=\"http://github.com/" + repo_name + "\">" + repo_name + "</a></div>";
+                                },
+                            },
+                        };
+                        source_name = event['type']['source']['name'];
+                        event_type_name = event['type']['name'];
+                        if (source_name in msg_generators) {
+                            source_gens = msg_generators[source_name];
+                            if (event_type_name in source_gens) {
+                                $("#lifestream_content").append("<div class=\"lifestream_event\">"+
+                                    source_gens[event_type_name](event)+
+                                    "</div>");
+                            }
+                        }
+                        console.log(event);
+                    });
+                });
             }
         </script>
 
@@ -78,6 +122,7 @@
             <h1>GregHaynes.net</h1>
             <nav id="main_nav">
                 <ul id="nav_list">
+                    <li class="nav_item" onclick="load_page('lifestream')"><a href="#lifestream" class="nav_link">Life Stream</a></li>
                     <li class="nav_item" onclick="load_page('about')"><a href="#about" class="nav_link">About</a></li>
                     <li class="nav_item" onclick="load_page('projects')"><a href="#projects" class="nav_link">Projects</a></li>
                     <li class="nav_item" onclick="load_page('misc')"><a href="#misc" class="nav_link">Misc.</a></li>
@@ -86,6 +131,11 @@
         </header>
 
         <article id="content">
+            <section id="page_lifestream">
+                <div id="lifestream_content">
+                </div>
+            </section>
+
             <section id="page_about">
                 <p>Gregory Haynes is a software engineer in Portland, Oregon.</p>
                 <p>He is involved in many open source <a href="#projects" onclick="load_page('projects')">projects</a> and is currently an operations engineer at <a href="http://www.idealist.org">Action Without Borders</a>.</p>

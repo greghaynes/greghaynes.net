@@ -9,6 +9,7 @@
         <title>GregHaynes.net</title>
 
         <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/moment.js"></script>
         <script type="text/javascript">
             var contentNodes = {};
 
@@ -62,9 +63,10 @@
                         msg_generators = {
                             'github': {
                                 'PushEvent': function(event) {
+                                    var delta_str = moment.utc(event.time).fromNow();
                                     repo = event['properties']['repo']['name'];
                                     ret = "<div class=\"github_event\">Pushed to <a href=\"http://github.com/" + repo + "\">" +
-                                        repo + "</a><ul class=\"lifestream_sub\">";
+                                        repo + "</a> <span class=\"event_delta\">" + delta_str + "</span><ul class=\"lifestream_sub\">";
                                     commits = event.properties.payload.commits;
                                     $(commits).each(function(index, commit) {
                                         ret += "<em>\"" + commit.message + "\"</em><br />";
@@ -73,18 +75,23 @@
                                     return ret;
                                 },
                                 'PullRequestEvent': function(event) {
+                                    var delta_str = moment.utc(event.time).fromNow();
                                     repo = event['properties']['repo']['name'];
-                                    ret = "<div class=\"github_event\">Received <a href=\"" + event.properties.payload.pull_request.html_url + "\">pull request</a>" +
-                                        " on <a href=\"http://github.com/" + repo + "\">" + repo + "</a></div>";
+                                    ret = "<div class=\"github_event\">Received <a href=\"" + event.properties.payload.pull_request.html_url + "\">"
+                                        + "pull request</a>" + " on <a href=\"http://github.com/" + repo + "\">" + repo +
+                                        "</a> <span class=\"event_delta\">" + delta_str + "</span></div>";
                                     return ret;
                                 },
                                 'IssueCommentEvent': function(event) {
+                                    var delta_str = moment.utc(event.time).fromNow();
                                     return "<div class=\"github_event\">Commented on issue <a href=\"" + event.properties.payload.issue.html_url + "\">\"" +
-                                        event.properties.payload.issue.title + "\"</a></div>";
+                                        event.properties.payload.issue.title + "\"</a> <span class=\"event_delta\">" + delta_str + "</span></div>";
                                 },
                                 'CreateEvent': function(event) {
+                                    var delta_str = moment.utc(event.time).fromNow();
                                     repo_name = event.properties.repo.name;
-                                    return "<div class=\"github_event\">Created repository <a href=\"http://github.com/" + repo_name + "\">" + repo_name + "</a></div>";
+                                    return "<div class=\"github_event\">Created repository <a href=\"http://github.com/" + repo_name + "\">" +
+                                        repo_name + "</a> <span class=\"event_delta\">" + delta_str + "</span></div>";
                                 },
                             },
                         };

@@ -58,7 +58,7 @@
                     page_name = url.substring(lb_ndx + 1);
                 load_page(page_name);
 
-                $.getJSON('http://localhost:5000/v1/recent', function(data) {
+                $.getJSON('http://lifestream.greghaynes.net/v1/recent', function(data) {
                     $(data).each(function(index, event) {
                         msg_generators = {
                             'github': {

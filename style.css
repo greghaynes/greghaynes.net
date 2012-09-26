@@ -76,6 +76,12 @@ a#sidebar {
     background-repeat: no-repeat;
 }
 
+.lastfm_event {
+    padding-left: 20px;
+    background-image: url("http://last.fm/favicon.ico");
+    background-repeat: no-repeat;
+}
+
 .event_delta {
     color: #444;
     font-style: italic;

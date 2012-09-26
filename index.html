@@ -58,7 +58,7 @@
                     page_name = url.substring(lb_ndx + 1);
                 load_page(page_name);
 
-                $.getJSON('http://lifestream.greghaynes.net/v1/recent', function(data) {
+                $.getJSON('http://localhost:5000/v1/recent', function(data) {
                     $(data).each(function(index, event) {
                         msg_generators = {
                             'github': {
@@ -94,6 +94,15 @@
                                         repo_name + "</a> <span class=\"event_delta\">" + delta_str + "</span></div>";
                                 },
                             },
+                            'lastfm': {
+                                'TrackPlayed': function(event) {
+                                    var delta_str = moment.utc(event.time).fromNow();
+                                    var track = event.properties.name;
+                                    var artist = event.properties.artist['#text'];
+                                    return "<div class=\"lastfm_event\">Listened to " + track + " by " + artist + 
+                                        " <span class=\"event_delta\">" + delta_str + "</span></div>";
+                                },
+                            },
                         };
                         source_name = event['type']['source']['name'];
                         event_type_name = event['type']['name'];
@@ -105,7 +114,6 @@
                                     "</div>");
                             }
                         }
-                        console.log(event);
                     });
                 });
             }

@@ -12,6 +12,7 @@
         <script type="text/javascript" src="js/moment.js"></script>
         <script type="text/javascript">
             var contentNodes = {};
+            var lifestream_offset = 0;
 
             document.getElementsByClassName = function(clsName){
                 var retVal = new Array();
@@ -46,19 +47,13 @@
                 }
             }
 
-            function do_onload() {
-                var content_elem = document.getElementById("content");
-                for(i in content_elem.childNodes)
-                    contentNodes[content_elem.childNodes[i].id] = content_elem.childNodes[i];
+            function lifestream_load(offset, count) {
+                if(offset == undefined)
+                    offset = 0;
+                if(count == undefined)
+                    count = 20;
 
-                var url = decodeURI(window.location);
-                var page_name = "lifestream";
-                var lb_ndx = url.indexOf("#");
-                if(lb_ndx >= 0)
-                    page_name = url.substring(lb_ndx + 1);
-                load_page(page_name);
-
-                $.getJSON('http://lifestream.greghaynes.net/v1/recent', function(data) {
+                $.getJSON('http://lifestream.greghaynes.net/v1/recent?offset='+offset+'&count='+count, function(data) {
                     $(data).each(function(index, event) {
                         msg_generators = {
                             'github': {
@@ -118,6 +113,26 @@
                     });
                 });
             }
+
+            function lifestream_more() {
+                lifestream_offset += 20;
+                lifestream_load(lifestream_offset);
+            }
+
+            function do_onload() {
+                var content_elem = document.getElementById("content");
+                for(i in content_elem.childNodes)
+                    contentNodes[content_elem.childNodes[i].id] = content_elem.childNodes[i];
+
+                var url = decodeURI(window.location);
+                var page_name = "lifestream";
+                var lb_ndx = url.indexOf("#");
+                if(lb_ndx >= 0)
+                    page_name = url.substring(lb_ndx + 1);
+                load_page(page_name);
+
+                lifestream_load(lifestream_offset);
+            }
         </script>
 
         <script type="text/javascript">
@@ -154,6 +169,7 @@
             <section id="page_lifestream">
                 <div id="lifestream_content">
                 </div>
+                <a href="javascript:lifestream_more()">+ More</a>
             </section>
             <section id="page_projects">
                 <ul>

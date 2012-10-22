@@ -73,6 +73,7 @@ a#sidebar {
 .github_event {
     padding-left: 20px;
     background-image: url("http://github.com/favicon.ico");
+    background-size: 16px 16px;
     background-repeat: no-repeat;
 }
 

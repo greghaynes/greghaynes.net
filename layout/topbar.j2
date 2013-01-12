@@ -5,14 +5,16 @@
 
 
 {% block body %}
-<div class="topbar">
+<div class="navbar navbar-inverse navbar-static-top">
   {% block topbar %}
-  <div class="fill">
-    <div class="container">
+  <div class="navbar-inner">
+      <div class="container">
       <a class="brand" href="{{ home_url }}">{{ site_title }}</a>
+      <div class="nav-collapse collapse">
       {% from "macros.j2" import render_main_menu with context %}
       {{ render_main_menu() }}
-    </div>
+      </div>
+      </div>
   </div>
   {% endblock topbar %}
 </div>

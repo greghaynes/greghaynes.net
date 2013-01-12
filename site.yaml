@@ -9,22 +9,22 @@ plugins:
     - hyde.ext.plugins.textlinks.TextlinksPlugin
 context:
     data:
-        site_title: Site Name
+        site_title: GregHaynes.net
         author:
-            name: Your Name Here
-            url: "http://example.com"
+            name: Gregory Haynes
+            url: "http://greghaynes.net"
         google_analytics_id: UA-XXXXX-YY
-        home_url: index.html
+        home_url: /index.html
         menu:
-            - title: About
-              url: /index.html
+            - title: Projects
+              url: /projects.html
             - title: Blog
               url: /blog/index.html
               type: node
 meta:
     nodemeta: meta.yaml
-    created: !!timestamp 2010-01-01 00:00:00
-    author: Lakshmi Vyasarajan
+    created: !!timestamp 2013-01-01 00:00:00
+    author: Gregory Haynes
 sorter:
     time:
         attr:

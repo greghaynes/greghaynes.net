@@ -1,0 +1,23 @@
+{% extends "topbar.j2" %}
+
+{% block css %}
+<style type="text/css">
+  body {
+    padding-top: 60px;
+  }
+</style>
+{% endblock css %}
+
+{% from "macros.j2" import render_excerpt with context  %}
+
+{% block content %}
+<div>
+<ul class="listing">
+{% for res in resource.node.walk_resources_sorted_by_time() %}
+<li>
+    {{ render_excerpt(res) }}
+</li>
+{% endfor %}
+</ul>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "topbar.j2" %}
+
+{% block css %}
+<style type="text/css">
+  body {
+    padding-top: 60px;
+  }
+</style>
+{% endblock css %}
+
+{% block subnav %}
+{% endblock %}
+
+{% block content %}
+
+<article class="post">
+
+        <h1 class="title">
+            <a href="{{ content_url(resource.url) }}">
+                {{ resource.meta.title }}
+            </a>
+        </h1>
+        <time datetime="{{ resource.meta.created.strftime('%Y-%m-%d') }}">
+            Posted: {{ resource.meta.created.strftime('%a, %d %b %Y') }}
+        </time>
+
+        {% filter markdown|typogrify -%}
+        {% mark post -%}
+        {% block post -%}{%- endblock %}
+        {%- endmark %}
+        {%- endfilter %}
+
+</article>
+
+{% endblock %}
+
+

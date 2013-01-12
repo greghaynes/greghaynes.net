@@ -5,12 +5,12 @@
 {% block content %}
 
 <div class="row">
-  <div class="span9">
+  <div class="span8">
       {% filter markdown -%}
       {% block main %}{% endblock %}
       {%- endfilter %}
   </div>
-  <div class="span3">
+  <div class="span4">
     {% block sidebar %}{% endblock %}
   </div>
 </div>

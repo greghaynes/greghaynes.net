@@ -1,0 +1,17 @@
+{% extends "topbar.j2" %}
+
+{% block content %}
+{%- filter markdown %}
+## Projects
+
+Most of my open source projects can be found on [github.com/greghaynes](http://github.com/greghaynes).
+
+Some of the projects that are not on github, or are particularly interesting:
+
+* [Portland State Autonomous Vehicles Team](http://avt.cecs.pdx.edu/)
+* [XSBS](http://xsbs.greghaynes.net) - Extensible Sauerbraten Server
+* [Kobby](http://kobby.greghaynes.net) - Collaborative text editor based on Kate
+
+{%- endfilter %}
+{% endblock %}
+

@@ -1,0 +1,45 @@
+---
+title: Introducing SyslogProcessor
+description: >
+    Introducting SyslogProcessor
+created: !!timestamp '2013-01-12 14:51:00'
+---
+
+{% mark excerpt -%}
+
+Like many organizations, at [Idealist](http://idealist.org) we forward all of our system and application logs to a central logging server. In our effort to begin [measuring everything](http://codeascraft.etsy.com/2011/.../measure-anything-measure-everything/), we wanted to analyze our logs as they came in and send some of this data into statsd. After a series of egregious hacks I created [SyslogProcessor](http://github.com/greghaynes/SyslogProcessor) to allow us to easily and efficiently develop software to do this.
+
+{%- endmark %}
+
+
+In order to facilitate the addition of new stats grabbers the application uses a Plugin system where each plugin specifies a set of criteria for messages to be passed to its handler method. Here is an example plugin which might process all webapp log messages which contain GET:
+
+<pre>
+import handler
+
+class AllMsgHandler(handler.LogEntryHandler):
+    def __init__(self, log_write_queue):
+        super(AllMsgHandler, self).__init__(self.got_entry, log_write_queue,
+              app_name='webapp.*',
+              msg='.*GET.*')
+    def got_entry(self, entry):
+        print 'Got entry(2): %s' % entry
+</pre>
+
+This sub 10 line python file allows us to graph how many GET requests we have coming in, we simply send a packet to statsd every time got_entry is called.
+
+
+One of our best use cases for this has been with HAProxy log messages. By default HAProxy logs a breakdown of where each request is spending time. We wrote a simple plugin which parses out this information and sends it into statsd, broken down by HAProxy frontend and backend. As a result we now have real time graphs of how long each front end and back end is taking to establish a connection, begin serving a response, and complete serving a response. This data has been invaluable in performance tuning and diagnosing performance problems.
+
+
+SyslogProcessor acts as a syslog server, so to use it you simply forward your logs to it. Currently, it only accepts TCP Syslog23 format messages so you must forward messages in this manner. We use the line below on our central logging server to do this (on an rsyslog server):
+
+<pre>
+*.* @@(o)syslogprocessor;RSYSLOG_SyslogProtocol23Format
+</pre>
+
+
+One major problem we encountered as a result of using TCP as a transport for forwarding the log messages is whenever we wanted to restart the log processor there would be a multiple second delay before rsyslogd would attempt to re-establish the connection. Weve had previous issues with using UDP for a transport so  implemented a plugin reloading system which keeps the tcp connection open.
+
+
+Feel free to let me know what you think, if you find this application useful, or if you especially dont (but hopefully the former).

@@ -12,6 +12,7 @@
 <article class="post">
 </div>
 
+        <div id="blogheader">
         <h1 class="title">
             <a href="{{ content_url(resource.url) }}">
                 {{ resource.meta.title }}
@@ -20,8 +21,9 @@
         <time datetime="{{ resource.meta.created.strftime('%Y-%m-%d') }}">
             Posted: {{ resource.meta.created.strftime('%a, %d %b %Y') }}
         </time>
+        </div>
 
-        {% filter markdown|typogrify -%}
+        {% filter markdown -%}
         {% mark post -%}
         {% block post -%}{%- endblock %}
         {%- endmark %}

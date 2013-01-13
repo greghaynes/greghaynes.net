@@ -25,6 +25,7 @@ meta:
     nodemeta: meta.yaml
     created: !!timestamp 2013-01-01 00:00:00
     author: Gregory Haynes
+    description: Homepage of Gregory Haynes, Software Engineer.
 sorter:
     time:
         attr:

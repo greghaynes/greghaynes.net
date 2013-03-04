@@ -1,0 +1,26 @@
+---
+title: Afproto Version 2
+description: >
+    Version 2 of Afproto, A serial framing protocol
+created: !!timestamp '2013-03-03 00:10:00'
+---
+
+{% mark excerpt -%}
+
+From time to time I need to send commands between an embedded device (usually a robot of some kind) and a client program (usually in python) over serial. Ontop of the serial read/write code, this also requires a framing protocol so messages can be deliniated from one another.
+
+{%- endmark %}
+
+
+When I first needed a solution for this I wrote a simple framing protocol, Afproto (A Framing Protocol). The first version worked reasonably well, and was used in several successful projects. I even created a quadcopter with a python control GUI using it.
+
+While working on another robotics project ([BeagleDrone](http://github.com/greghaynes/BeagleDrone)) I decided to take a whack at improving Afproto. With little effort I was able to improve the protocol to use less bytes of metadata, use a 16bit crc instead of 8, and not have a length limit. In greatly simplifying the protocol, I was also able to create much more simple encoders and decoders.
+
+After a short bit of work, [Afproto version 2](http://github.com/greghaynes/Afproto) is now safe for public consumption. Enjoy!
+
+As stated before, the protocol is greatly simplified. Like with the old version, each frame begins and ends with a predefined start / end byte. Immediately following the start byte is the data, and immediately following the data is a 2 byte CRC (xmodem). One big distinction from the previous version is a lack of length being specified in the protocol. Removing this allows the new protocol to not be bound by the length limits of the previous protocol.
+
+One reason this is possible, while greatly simplifying the decode and encode algorithms is due to an improvement on the escaping algorithm. The previous escape algorithm used the common: append an escape byte before any of the magic bytes (start, end, escape). By modifying this slightly, to also xor an escaped byte by a value (0x20 in Afproto), we can be sure that the only time we will see a magic byte when we legitimately have a start or end (all the escaped ones will be xor'd to a different value).
+
+In short, its amazing how removing a simple bit of metadata from a protocol can greatly improve its ability while simplifying implementations.
+

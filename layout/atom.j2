@@ -9,7 +9,7 @@
     {% endblock %}
 
     {% block site_url %}
-    <link href="{{ content_url('') }}"/>
+    <link href="http://greghaynes.net/blog" rel="alternate"/>
     {% endblock %}
 
     {% block feed_extra %}
@@ -17,7 +17,7 @@
 
     <updated>{{ time_now|xmldatetime }}</updated>
 
-    <id>{{ content_url(resource.url) }}/</id>
+    <id>http://greghaynes.net/blog</id>
 
     {% for res in resource.node.walk_resources_sorted_by_time() %}
         <entry>

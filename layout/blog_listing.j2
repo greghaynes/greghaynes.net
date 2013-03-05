@@ -1,5 +1,9 @@
 {% extends "topbar.j2" %}
 
+{% block starthead %}
+<link rel="alternate" type="application/atom+xml" title="Gregory Haynes' Blog" href="/blog/atom.xml">
+{% endblock %}
+
 {% from "macros.j2" import render_excerpt with context  %}
 
 {% block content %}

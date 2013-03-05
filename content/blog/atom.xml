@@ -2,3 +2,4 @@
 extends: atom.j2
 listable: false
 ---
+{% block title %}Gregory Haynes' Blog {% endblock %}

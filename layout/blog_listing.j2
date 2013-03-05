@@ -6,7 +6,7 @@
 <div>
 <ul class="listing">
 {% for res in resource.node.walk_resources_sorted_by_time() %}
-<li>
+<li class="bloglisting">
     {{ render_excerpt(res) }}
 </li>
 {% endfor %}

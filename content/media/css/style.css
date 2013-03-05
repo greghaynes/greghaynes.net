@@ -1,3 +1,7 @@
+li.bloglisting {
+    list-style-type: none;
+}
+
 #blogheader {
     padding-bottom: 20px;
 }

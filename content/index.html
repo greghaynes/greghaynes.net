@@ -1,16 +1,13 @@
-{% extends "columns.j2" %}
+{% extends "topbar.j2" %}
 
-{% block main %}
+{% block content  %}
+{%- filter markdown %}
+<img align="left" src="http://www.gravatar.com/avatar/ea2857bd677e228e9e211125e380e358?s=150" />
+
 ## About
 
 Gregory Haynes is a software engineer in Portland, Oregon.
 
 He is involved in many open source [projects](/projects.html) and currently works at [Action Without Borders](http://idealist.org).
-{% endblock main %}
-
-
-{% block sidebar %}
-<h3>LifeStream</h3>
-
-<p>Currently Disabled</p>
-{% endblock sidebar %}
+{%- endfilter %}
+{% endblock content %}
